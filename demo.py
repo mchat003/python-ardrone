@@ -33,6 +33,20 @@ import pygame
 import libardrone
 
 
+def print_nav_data(drone):
+    ctrl_state = drone.navdata.get(0, dict()).get('ctrl_state', 0)
+    battery = drone.navdata.get(0, dict()).get('battery', 0)
+    theta = drone.navdata.get(0, dict()).get('theta', 0)
+    phi = drone.navdata.get(0, dict()).get('phi', 0)
+    psi = drone.navdata.get(0, dict()).get('psi', 0)
+    altitude = drone.navdata.get(0, dict()).get('altitude', 0)
+    vx = drone.navdata.get(0, dict()).get('vx', 0)
+    vy = drone.navdata.get(0, dict()).get('vy', 0)
+    vz = drone.navdata.get(0, dict()).get('vz', 0)
+    num_frames = drone.navdata.get(0, dict()).get('num_frames', 0)
+    print "ctrl_state: %s | battery: %s | theta: %s | phi: %s | psi: %s | altitude: %s | vx: %s | vy: %s | vz: %s | num_frames: %s" % (ctrl_state, battery, theta, phi, psi, altitude, vx, vy, vz, num_frames)
+    #print ctrl_state "ctrl_state: %s | battery: %s" % (ctrl_state, battery)
+
 def main():
     pygame.init()
     W, H = 320, 240
@@ -101,6 +115,7 @@ def main():
                     drone.speed = 1.0
 
         try:
+            print_nav_data(drone)
             surface = pygame.image.fromstring(drone.image, (W, H), 'RGB')
             # battery status
             hud_color = (255, 0, 0) if drone.navdata.get('drone_state', dict()).get('emergency_mask', 1) else (10, 10, 255)
